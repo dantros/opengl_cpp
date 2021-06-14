@@ -12,28 +12,28 @@ versiones diferentes de GLAD (OpenGL) en esta carpeta.
 - Crear directorio "Libraries" en la carpeta del proyecto y dentro los directorios "include" y "lib"
 - Descomprimir el zip descargado en glfw
 - Abrir Cmake y poner la siguiente configuracion:
-	* Where is the source code: directorio descomprimido de glfw
-	* Where to build the binares: En el mismo directorio anterior, crear la carpeta build e indicarla
+	- Where is the source code: directorio descomprimido de glfw
+	- Where to build the binares: En el mismo directorio anterior, crear la carpeta build e indicarla
 	- Ir a Configure y debe haber la siguiente configuracion:
-		* Specify the generator for this project: Visual Studio 16 2019
-		* Optional platform for geenerator(...): Blank
-		* Optional toolsetto use (argument to -T): Blank
-		[*] Use default native compilers
-		[ ] Specify native compilers
-		[ ] Specify toolchain file for cross compiling
-		[ ] Specify options for cross compiling
+		- Specify the generator for this project: Visual Studio 16 2019
+		- Optional platform for geenerator(...): Blank
+		- Optional toolsetto use (argument to -T): Blank
+		- [x] Use default native compilers
+		- [ ] Specify native compilers
+		- [ ] Specify toolchain file for cross compiling
+		- [ ] Specify options for cross compiling
 	- Debe aparecer en el cuadro de al medio en rojo lo sgt:
-		BUILD_SHARED_LIBS                 [ ]
-		CMAKE_AR                          C:/Program Files/Microsoft Visual Studio/2019/......
-		CMAKE_CONFIGURATION_TYPES         Debug;Release;MinSize ...
-		CMAKE_INSTALL_PREFIX              C:/Program Files (x86)/GLFW
-		GLFW_BUILD_DOCS                   [*]
-		GLFW_BUILD_EXAMPLES               [*]
-		GLFW_BUILD_TESTS                  [*]
-		GLFW_INSTALL                      [*]
-		GLFW_USE_HYBRID_HPG               [ ]
-		GLFW_VULKAN_STATIC                [ ]
-		GLFW_MSVC_RUNTIME_LIBRARY_DLL     [*]
+		- [ ] BUILD_SHARED_LIBS                 
+		- CMAKE_AR                          C:/Program Files/Microsoft Visual Studio/2019/......
+		- CMAKE_CONFIGURATION_TYPES         Debug;Release;MinSize ...
+		- CMAKE_INSTALL_PREFIX              C:/Program Files (x86)/GLFW
+		- [x] GLFW_BUILD_DOCS                   
+		- [x] GLFW_BUILD_EXAMPLES               
+		- [x] GLFW_BUILD_TESTS                  
+		- [x] GLFW_INSTALL                      
+		- [ ] GLFW_USE_HYBRID_HPG               
+		- [ ] GLFW_VULKAN_STATIC                
+		- [x] GLFW_MSVC_RUNTIME_LIBRARY_DLL     
 	- Apretar Configure, se vuelve blanco y apretar Generate
 - Abrir carpeta donde se hizo el build y abrir GLFW.sln
 - Seleccionar la solucion -> Build Solution
@@ -48,8 +48,10 @@ versiones diferentes de GLAD (OpenGL) en esta carpeta.
 - Ir a VC++ Directories -> Include Directories -> Edit -> new -> ... -> seleccionar la carpeta project/Libraries/include -> ok
 - Ir a VC++ Directories -> Library Directories -> Edit -> new -> ... -> seleccionar la carpeta project/Libraries/lib -> ok
 - Ir a Linker -> Input -> Additional Dependencies -> Edit -> poner en el campo de texto:
+```
 glfw3.lib
 opengl32.lib
+```
   -> ok
 - Arrastar el archivo glad.c de la carpeta del proyecto a "Source FIles" en VS 2019
 - Crear un main.cpp

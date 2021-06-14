@@ -55,3 +55,26 @@ opengl32.lib
   -> ok
 - Arrastar el archivo glad.c de la carpeta del proyecto a "Source FIles" en VS 2019
 - Crear un main.cpp
+
+
+-------- PASOS PARA crear un Proyecto ---------------------
+
+- Crear un proyecto en VS 2019 vacio
+- Crear directorio "Libraries" en la carpeta del proyecto y dentro los directorios "include" y "lib"
+- Ir a ../build/src/Debug y copiar el archivo "glfw3.lib" a la carpeta del proyecto /project/Libraries/lib
+- Ir a ../include y copiar la carpeta "GLFW" a la carpeta del proyecto /project/Libraries/include
+- Abrir glad.zip -> ir a /include y copiar carpetas "glad" y "KHR" a la carpeta del proyecto /project/Libraries/include
+- Del mismo zip -> ir a /src y copiar el archivo "glad.c" en la carpeta del proyecto /project
+-- Ahora hay que configurar el proyecto en VS
+- Seleccionar la plataforma x64 en el editor
+- Ir a configuraciones del proyecto y seleccionar en Platform: All Platforms
+- Ir a VC++ Directories -> Include Directories -> Edit -> new -> ... -> seleccionar la carpeta project/Libraries/include -> ok
+- Ir a VC++ Directories -> Library Directories -> Edit -> new -> ... -> seleccionar la carpeta project/Libraries/lib -> ok
+- Ir a Linker -> Input -> Additional Dependencies -> Edit -> poner en el campo de texto:
+```
+glfw3.lib
+opengl32.lib
+```
+  -> ok
+- Arrastar el archivo glad.c de la carpeta del proyecto a "Source FIles" en VS 2019
+- Crear un main.cpp

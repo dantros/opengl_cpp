@@ -72,6 +72,8 @@ Libreria necesaria para setear texturas
 - Copiar stb_image.h en project/Libraries/include
 - Copiar stb.cpp en algun directorio, ya uqe es necesario su compilación.
 
+** Se debe agregar stb.cpp en cada proyecto que requiera texturas
+
 
 -------- PASOS PARA crear un Proyecto ---------------------
 

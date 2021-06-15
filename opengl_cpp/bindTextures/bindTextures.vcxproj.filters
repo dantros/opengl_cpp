@@ -15,18 +15,14 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="shaders\shader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="shaders\basicShader.vs" />
-    <None Include="shaders\basicShader.fs" />
-    <None Include="shaders\basicTexShader.vs" />
-    <None Include="shaders\basicTexShader.fs" />
-    <None Include="shaders\basic2TexShader.vs" />
-    <None Include="shaders\basic2TexShader.fs" />
-    <None Include="shaders\transformShader.vs" />
-    <None Include="shaders\transformShader.fs" />
+    <ClCompile Include="bindTextures.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\glad.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\stb.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

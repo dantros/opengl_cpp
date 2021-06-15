@@ -56,6 +56,22 @@ opengl32.lib
 - Arrastar el archivo glad.c de la carpeta del proyecto a "Source FIles" en VS 2019
 - Crear un main.cpp
 
+----PASOS para instalar GLM--------
+Libreria necesaria para calculos vectoriales
+- Descargar GLM -> Descomprimir
+- Copiar directorio que sea raiz de glm.h y pegarla en projects/Libraries/include
+
+----PASOS para instalar stb_image-------
+Libreria necesaria para setear texturas
+- Descargar header stb_image.h
+- Crear archivo stb.cpp que contenga lo siguiente:
+```
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+```
+- Copiar stb_image.h en project/Libraries/include
+- Copiar stb.cpp en algun directorio, ya uqe es necesario su compilación.
+
 
 -------- PASOS PARA crear un Proyecto ---------------------
 

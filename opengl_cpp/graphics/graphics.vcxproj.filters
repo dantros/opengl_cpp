@@ -28,5 +28,7 @@
     <None Include="shaders\basic2TexShader.fs" />
     <None Include="shaders\transformShader.vs" />
     <None Include="shaders\transformShader.fs" />
+    <None Include="shaders\positionShader.vs" />
+    <None Include="shaders\positionShader.fs" />
   </ItemGroup>
 </Project>

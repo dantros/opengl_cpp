@@ -9,9 +9,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "transformations", "transfor
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "graphics", "graphics\graphics.vcxproj", "{633B8474-5DBB-4EC6-AC83-B2FDD91B84C3}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "basicTexture", "basic_texture\basic_texture.vcxproj", "{D2E43695-A389-4EC6-B6DC-5999CD0F67EB}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "simpleTexture", "basic_texture\basic_texture.vcxproj", "{D2E43695-A389-4EC6-B6DC-5999CD0F67EB}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bindTextures", "bindTextures\bindTextures.vcxproj", "{F42BC623-BEB2-4002-AC44-E3D53C8D648E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "simple3DCUDA", "simple3DCUDA\simple3DCUDA.vcxproj", "{E6826D7A-276D-4D59-880E-F1F5117BB9ED}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "simpleInteropCUDA", "simpleInteropCUDA\simpleInteropCUDA.vcxproj", "{6ECB55C5-3B9B-444C-A224-546635B7830C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +65,18 @@ Global
 		{F42BC623-BEB2-4002-AC44-E3D53C8D648E}.Release|x64.Build.0 = Release|x64
 		{F42BC623-BEB2-4002-AC44-E3D53C8D648E}.Release|x86.ActiveCfg = Release|Win32
 		{F42BC623-BEB2-4002-AC44-E3D53C8D648E}.Release|x86.Build.0 = Release|Win32
+		{E6826D7A-276D-4D59-880E-F1F5117BB9ED}.Debug|x64.ActiveCfg = Debug|x64
+		{E6826D7A-276D-4D59-880E-F1F5117BB9ED}.Debug|x64.Build.0 = Debug|x64
+		{E6826D7A-276D-4D59-880E-F1F5117BB9ED}.Debug|x86.ActiveCfg = Debug|x64
+		{E6826D7A-276D-4D59-880E-F1F5117BB9ED}.Release|x64.ActiveCfg = Release|x64
+		{E6826D7A-276D-4D59-880E-F1F5117BB9ED}.Release|x64.Build.0 = Release|x64
+		{E6826D7A-276D-4D59-880E-F1F5117BB9ED}.Release|x86.ActiveCfg = Release|x64
+		{6ECB55C5-3B9B-444C-A224-546635B7830C}.Debug|x64.ActiveCfg = Debug|x64
+		{6ECB55C5-3B9B-444C-A224-546635B7830C}.Debug|x64.Build.0 = Debug|x64
+		{6ECB55C5-3B9B-444C-A224-546635B7830C}.Debug|x86.ActiveCfg = Debug|x64
+		{6ECB55C5-3B9B-444C-A224-546635B7830C}.Release|x64.ActiveCfg = Release|x64
+		{6ECB55C5-3B9B-444C-A224-546635B7830C}.Release|x64.Build.0 = Release|x64
+		{6ECB55C5-3B9B-444C-A224-546635B7830C}.Release|x86.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="cameras\camera2d.h" />
     <ClInclude Include="shaders\shader.h" />
   </ItemGroup>
   <ItemGroup>
@@ -156,6 +157,8 @@
     <None Include="shaders\basicShader.vs" />
     <None Include="shaders\basicTexShader.fs" />
     <None Include="shaders\basicTexShader.vs" />
+    <None Include="shaders\circleTransformShader.fs" />
+    <None Include="shaders\circleTransformShader.vs" />
     <None Include="shaders\positionShader.fs" />
     <None Include="shaders\positionShader.vs" />
     <None Include="shaders\transformShader.fs" />

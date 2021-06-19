@@ -18,6 +18,9 @@
     <ClInclude Include="shaders\shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="cameras\camera2d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\basicShader.vs" />
@@ -30,5 +33,7 @@
     <None Include="shaders\transformShader.fs" />
     <None Include="shaders\positionShader.vs" />
     <None Include="shaders\positionShader.fs" />
+    <None Include="shaders\circleTransformShader.vs" />
+    <None Include="shaders\circleTransformShader.fs" />
   </ItemGroup>
 </Project>

@@ -1,15 +1,16 @@
-﻿
-#include <glad/glad.h>
+﻿#include <glad/glad.h>
 
 #include "cuda_runtime.h"
 #include "device_launch_parameters.h"
 #include <cuda_gl_interop.h>
 
 #include <GLFW/glfw3.h>
-
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #include "../graphics/shaders/shader.h"
+#include "../graphics/cameras/camera2d.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -24,49 +25,53 @@ using namespace std;
 //
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
+void runKernel(float3* pos, unsigned int mesh_width, float time);
+void runTest();
+void runCuda(struct cudaGraphicsResource** vbo_resource, float time);
+void runDisplay();
+void deleteVBO(GLuint* vbo, struct cudaGraphicsResource* vbo_res);
+
+void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+void processInput(GLFWwindow* window);
+void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
+void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+
 const unsigned int window_width = 800;
 const unsigned int window_height = 800;
 const unsigned int mesh_width = 256;
+
+// camera
+Camera2D camera(glm::vec2(0.0f, 0.0f));
 
 // vbo variables
 GLuint vbo;
 struct cudaGraphicsResource* cuda_vbo_resource;
 void* d_vbo_buffer = NULL;
 
-void runKernel(float3* pos, unsigned int mesh_width, float time);
-void runTest();
-void runCuda(struct cudaGraphicsResource** vbo_resource, float time); 
-void runDisplay();
-void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-void processInput(GLFWwindow* window, bool* fill);
-void deleteVBO(GLuint* vbo, struct cudaGraphicsResource* vbo_res);
-void circleShape(unsigned int*& indices, int verticesLength);
+// timing
+float deltaTime = 0.0f;	// time between current frame and last frame
 
-__global__ void simpleVBOKernel(float3 *pos, unsigned int width, float time)
+
+__global__ void points2dKernel(float3* pos, unsigned int width, float time)
 {
     unsigned int x = blockDim.x * blockIdx.x + threadIdx.x;
 
     // calculate uv coordinates
     float u = x / (float)width;
-
+    u = u * 2.0f - 1.0f;
+    u = u * 5.0f;
 
     // calculate simple sine wave pattern
-    float freq = 1.0f; 
-    float pi = 3.141592654f;
-    float dTheta = (2.0f * pi) / (float)(width - 1);
+    float freq = 4.0f;
+    float w = sinf(u * freq + time) * 0.25f;
 
-    float pon = sinf(time) + 1;
-    float w = (1 + cosf(u*12.0f*pi * pon)) *0.2f;
-    float rad = 0.5f + w ;
-    float finalX = rad * sinf(x * dTheta);
-    float finalY = rad * cosf(x * dTheta);
-
-    pos[x] = (x != 0) ? make_float3(finalX, finalY, 1.0f) : make_float3(0.0f, 0.0f, 1.0f);
-
+    // write output vertex
+    pos[x] = make_float3(u, w, 0.0f);
 }
 
 int main()
-{   
+{
     bool cudaTest = false;
 
     if (cudaTest)
@@ -76,8 +81,8 @@ int main()
 }
 
 
-void runTest() 
-{   
+void runTest()
+{
     void* returnData = malloc(mesh_width * sizeof(float));
 
     // create VBO
@@ -100,9 +105,7 @@ void runTest()
 void runKernel(float3* pos, unsigned int mesh_width, float time)
 {
     // execute the kernel
-    // dim3 block(8, 8, 1);
-    // dim3 grid(mesh_width / block.x, mesh_height / block.y, 1);
-    simpleVBOKernel << < 32, 8 >> > (pos, mesh_width, time);
+    points2dKernel << < 32, 8 >> > (pos, mesh_width, time);
 }
 
 void runCuda(struct cudaGraphicsResource** vbo_resource, float time)
@@ -132,7 +135,7 @@ void runDisplay()
 
     // glfw window creation
     // --------------------
-    GLFWwindow* window = glfwCreateWindow(window_width, window_height, "Simple Cuda interop", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(window_width, window_height, "2D Points interop CUDA", NULL, NULL);
     if (window == NULL)
     {
         cout << "Failed to create GLFW window" << endl;
@@ -141,9 +144,9 @@ void runDisplay()
     }
     glfwMakeContextCurrent(window);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-
-    glfwMakeContextCurrent(window);
-    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    glfwSetMouseButtonCallback(window, mouse_button_callback);
+    glfwSetCursorPosCallback(window, mouse_callback);
+    glfwSetScrollCallback(window, scroll_callback);
 
     // glad: load all OpenGL function pointers
     // ---------------------------------------
@@ -155,21 +158,14 @@ void runDisplay()
 
     // build and compile our shader program
     // ------------------------------------
-    Shader basicShader("../graphics/shaders/positionShader.vs", "../graphics/shaders/positionShader.fs"); // you can name your shader files however you like
+    Shader circleShader("../graphics/shaders/circleTransformShader.vs", "../graphics/shaders/circleTransformShader.fs"); // you can name your shader files however you like
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
-    
-    float* vertices;
 
-    unsigned int* indices;
-
-    circleShape(indices, mesh_width);
-
-    unsigned int VAO, EBO;
+    unsigned int VAO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &vbo);
-    glGenBuffers(1, &EBO);
     // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
     glBindVertexArray(VAO);
 
@@ -183,12 +179,6 @@ void runDisplay()
     // register this buffer object with CUDA
     cudaGraphicsGLRegisterBuffer(&cuda_vbo_resource, vbo, cudaGraphicsMapFlagsWriteDiscard);
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, (mesh_width -1) * 3 * sizeof(unsigned int), indices, GL_STATIC_DRAW);
-
-
-    
-
     // position attribute
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
@@ -198,18 +188,12 @@ void runDisplay()
 
     runCuda(&cuda_vbo_resource, 0.0f);
 
-
-
-
     // You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
     // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
     glBindVertexArray(0);
 
-    bool fillPolygon = true;
-
     float t1 = (float)glfwGetTime();
     float t0 = (float)glfwGetTime();
-    float delta = 0.0f;
 
     float timer = 0.0f;
 
@@ -218,14 +202,14 @@ void runDisplay()
     while (!glfwWindowShouldClose(window))
     {
         t1 = (float)glfwGetTime();
-        delta = t1 - t0;
+        deltaTime = t1 - t0;
         t0 = t1;
 
-        timer += delta * 1.0f;
+        timer += deltaTime * 1.0f;
 
         // input
         // -----
-        processInput(window, &fillPolygon);
+        processInput(window);
 
         runCuda(&cuda_vbo_resource, timer);
 
@@ -234,17 +218,21 @@ void runDisplay()
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        if (fillPolygon)
-            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-        else
-            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-
+        glEnable(GL_PROGRAM_POINT_SIZE);
         // render the triangle
-        basicShader.use();
+        circleShader.use();
+        //glPointSize(100.0f);
+
+
+        glm::mat4 trIdentity = glm::mat4(1.0f);
+        circleShader.setMat4("transform", camera.GetTransformMatrix());
+        circleShader.setFloat("pointRadius", 25);
+        circleShader.setFloat("pointScale", camera.GetZoom());
+        circleShader.setVec3("Color", glm::vec3(1.0f, 0.0f, 0.0f));
+
         glBindVertexArray(VAO);
-        // glDrawArrays(GL_TRIANGLE_FAN, 0, mesh_width);
-        glDrawElements(GL_TRIANGLES, (mesh_width - 1) * 3, GL_UNSIGNED_INT, 0);
+        glDrawArrays(GL_POINTS, 0, mesh_width);
+
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
         glfwSwapBuffers(window);
@@ -262,29 +250,6 @@ void runDisplay()
     return;
 }
 
-// process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
-// ---------------------------------------------------------------------------------------------------------
-void processInput(GLFWwindow* window, bool* fill)
-{
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
-
-    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
-        *fill = false;
-
-    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE)
-        *fill = true;
-}
-
-// glfw: whenever the window size changed (by OS or user resize) this callback function executes
-// ---------------------------------------------------------------------------------------------
-void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-{
-    // make sure the viewport matches the new window dimensions; note that width and 
-    // height will be significantly larger than specified on retina displays.
-    glViewport(0, 0, width, height);
-}
-
 void deleteVBO(GLuint* vbo, struct cudaGraphicsResource* vbo_res)
 {
 
@@ -297,34 +262,61 @@ void deleteVBO(GLuint* vbo, struct cudaGraphicsResource* vbo_res)
     *vbo = 0;
 }
 
-// Create indices for the mesh 
-void circleShape(unsigned int*& indices, int verticesLength) {
+// glfw: whenever the window size changed (by OS or user resize) this callback function executes
+// ---------------------------------------------------------------------------------------------
+void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
+    // make sure the viewport matches the new window dimensions; note that width and 
+    // height will be significantly larger than specified on retina displays.
+    glViewport(0, 0, width, height);
+}
 
-    int indexSize = 3;
-    indices = new unsigned int[(verticesLength - 1) * indexSize];
+// process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
+// ---------------------------------------------------------------------------------------------------------
+void processInput(GLFWwindow* window)
+{
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, true);
 
-    for (unsigned int i = 0; i < verticesLength - 1; i++)
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+        camera.ProcessKeyboard(UP, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+        camera.ProcessKeyboard(DOWN, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+        camera.ProcessKeyboard(LEFT, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+        camera.ProcessKeyboard(RIGHT, deltaTime);
+}
+
+void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+{
+    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
     {
-        if (i < verticesLength - 2)
-        {
-            unsigned int temp1[] = {
-                0, i + 1, i + 2 };
-            copy(temp1, temp1 + (1 * indexSize), (indices + i * indexSize));
-        }
-        else {
-            unsigned int temp1[] = {
-                0, i + 1, 1 };
-            copy(temp1, temp1 + (1 * indexSize), (indices + i * indexSize));
-        }
+        //cout << "Buton pressed in  " << deltaTime << endl;
+        camera.SetDrag(true);
     }
 
-
-    cout << "Indices: " << endl;
-
-    int li = 0;
-    for (int i = 0; i < (verticesLength - 1)*3; i++) {
-        cout << indices[i] << endl;
-        li++;
+    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE)
+    {
+        //cout << "Buton Released in  " << deltaTime << endl;
+        camera.SetDrag(false);
     }
-    cout << "length" << li << endl;
+}
+
+
+// glfw: whenever the mouse moves, this callback is called
+// -------------------------------------------------------
+void mouse_callback(GLFWwindow* window, double xpos, double ypos)
+{
+    float posX = 2 * (xpos - window_width / 2) / window_width;
+    float posY = 2 * (window_height / 2 - ypos) / window_height;
+    camera.SetCurrentPos(posX, posY);
+}
+
+// glfw: whenever the mouse scroll wheel scrolls, this callback is called
+// ----------------------------------------------------------------------
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+{
+    cout << "Scroll value  " << yoffset << endl;
+    camera.ProcessMouseScroll(yoffset);
 }

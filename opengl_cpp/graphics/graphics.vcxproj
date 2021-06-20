@@ -166,6 +166,8 @@
     <None Include="shaders\MVPTexShader.vs" />
     <None Include="shaders\positionShader.fs" />
     <None Include="shaders\positionShader.vs" />
+    <None Include="shaders\sphereMVPShader.fs" />
+    <None Include="shaders\sphereMVPShader.vs" />
     <None Include="shaders\transformShader.fs" />
     <None Include="shaders\transformShader.vs" />
   </ItemGroup>

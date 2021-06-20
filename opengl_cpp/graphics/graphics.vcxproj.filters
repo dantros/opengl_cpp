@@ -46,5 +46,7 @@
     <None Include="shaders\circleTransformShader.fs" />
     <None Include="shaders\MVPTexShader.vs" />
     <None Include="shaders\MVPTexShader.fs" />
+    <None Include="shaders\sphereMVPShader.vs" />
+    <None Include="shaders\sphereMVPShader.fs" />
   </ItemGroup>
 </Project>

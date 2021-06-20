@@ -21,6 +21,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "simple3DTexture", "simple3D
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Multiple3D", "Multiple3D\Multiple3D.vcxproj", "{650B62A0-3DFA-4923-AF42-77950ECB11C4}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "points3DCUDA", "points3DCUDA\points3DCUDA.vcxproj", "{24C603EC-BCBB-4C17-8231-15D9048C9E9A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -97,6 +99,12 @@ Global
 		{650B62A0-3DFA-4923-AF42-77950ECB11C4}.Release|x64.Build.0 = Release|x64
 		{650B62A0-3DFA-4923-AF42-77950ECB11C4}.Release|x86.ActiveCfg = Release|Win32
 		{650B62A0-3DFA-4923-AF42-77950ECB11C4}.Release|x86.Build.0 = Release|Win32
+		{24C603EC-BCBB-4C17-8231-15D9048C9E9A}.Debug|x64.ActiveCfg = Debug|x64
+		{24C603EC-BCBB-4C17-8231-15D9048C9E9A}.Debug|x64.Build.0 = Debug|x64
+		{24C603EC-BCBB-4C17-8231-15D9048C9E9A}.Debug|x86.ActiveCfg = Debug|x64
+		{24C603EC-BCBB-4C17-8231-15D9048C9E9A}.Release|x64.ActiveCfg = Release|x64
+		{24C603EC-BCBB-4C17-8231-15D9048C9E9A}.Release|x64.Build.0 = Release|x64
+		{24C603EC-BCBB-4C17-8231-15D9048C9E9A}.Release|x86.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

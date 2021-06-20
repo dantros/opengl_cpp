@@ -21,6 +21,15 @@
     <ClInclude Include="cameras\camera2d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="performanceMonitor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cameras\camera3d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cameras\cameraFirstPerson.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\basicShader.vs" />
@@ -35,5 +44,7 @@
     <None Include="shaders\positionShader.fs" />
     <None Include="shaders\circleTransformShader.vs" />
     <None Include="shaders\circleTransformShader.fs" />
+    <None Include="shaders\MVPTexShader.vs" />
+    <None Include="shaders\MVPTexShader.fs" />
   </ItemGroup>
 </Project>

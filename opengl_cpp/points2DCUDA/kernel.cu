@@ -11,9 +11,12 @@
 
 #include "../graphics/shaders/shader.h"
 #include "../graphics/cameras/camera2d.h"
+#include "../graphics/performanceMonitor.h"
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string>
+#include <sstream>
 #include <iostream>
 
 using namespace std;
@@ -133,9 +136,10 @@ void runDisplay()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
+    string title = "2D Points interop CUDA";
     // glfw window creation
     // --------------------
-    GLFWwindow* window = glfwCreateWindow(window_width, window_height, "2D Points interop CUDA", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(window_width, window_height, title.c_str(), NULL, NULL);
     if (window == NULL)
     {
         cout << "Failed to create GLFW window" << endl;
@@ -158,7 +162,7 @@ void runDisplay()
 
     // build and compile our shader program
     // ------------------------------------
-    Shader circleShader("../graphics/shaders/circleTransformShader.vs", "../graphics/shaders/circleTransformShader.fs"); // you can name your shader files however you like
+    Shader circleShader("../graphics/shaders/circleTransformShader.vs", "../graphics/shaders/circleTransformShader.fs"); 
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
@@ -197,6 +201,8 @@ void runDisplay()
 
     float timer = 0.0f;
 
+    PerformanceMonitor pMonitor(glfwGetTime(), 0.5f);
+
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window))
@@ -204,6 +210,11 @@ void runDisplay()
         t1 = (float)glfwGetTime();
         deltaTime = t1 - t0;
         t0 = t1;
+
+        pMonitor.update(glfwGetTime());
+        stringstream ss;
+        ss << title << " " << pMonitor;
+        glfwSetWindowTitle(window, ss.str().c_str());
 
         timer += deltaTime * 1.0f;
 

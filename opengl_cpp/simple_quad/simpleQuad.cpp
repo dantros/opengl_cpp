@@ -2,6 +2,7 @@
 #include <GLFW/glfw3.h>
 
 #include "../graphics/shaders/shader.h"
+#include "../graphics/performanceMonitor.h"
 
 #include <iostream>
 
@@ -27,9 +28,10 @@ int main()
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
 
+    string title = "Simple Quad";
     // glfw window creation
     // --------------------
-    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Simple Quad", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, title.c_str(), NULL, NULL);
     if (window == NULL)
     {
         cout << "Failed to create GLFW window" << endl;
@@ -91,12 +93,18 @@ int main()
     // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
     // glBindVertexArray(0);
 
+    PerformanceMonitor pMonitor(glfwGetTime(), 0.5f);
 
     bool fillPolygon = true;
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window))
     {
+        pMonitor.update(glfwGetTime());
+        stringstream ss;
+        ss << title << " " << pMonitor;
+        glfwSetWindowTitle(window, ss.str().c_str());
+
         // input
         // -----
         processInput(window, &fillPolygon);

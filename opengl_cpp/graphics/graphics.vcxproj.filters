@@ -48,5 +48,9 @@
     <None Include="shaders\MVPTexShader.fs" />
     <None Include="shaders\sphereMVPShader.vs" />
     <None Include="shaders\sphereMVPShader.fs" />
+    <None Include="shaders\lightMVPShader.vs" />
+    <None Include="shaders\lightMVPShader.fs" />
+    <None Include="shaders\colorMVPShader.vs" />
+    <None Include="shaders\colorMVPShader.fs" />
   </ItemGroup>
 </Project>

@@ -116,7 +116,7 @@ void runTest()
 void runKernel(float3* pos, unsigned int mesh_width, unsigned int mesh_height, float time)
 {
     // execute the kernel
-    dim3 block(8, 8, 1);
+    dim3 block(16, 16, 1);
     dim3 grid(mesh_width / block.x, mesh_height / block.y, 1);
     points3dKernel << < grid, block >> > (pos, mesh_width, mesh_height, time);
 }

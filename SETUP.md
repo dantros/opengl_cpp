@@ -74,6 +74,18 @@ Libreria necesaria para setear texturas
 
 ** Se debe agregar stb.cpp en cada proyecto que requiera texturas
 
+----PASOS para instalar imgui 1.8-------
+- Descargar los archivos y descomprimir
+- incorporar los archivos del directorio base y de la version a usar (open gl 3.* y glfw, headers y cpp que se encuentran en la carpeta backends) al proyecto como una libreria o directamente
+- Si se trabaja con una carpeta de libreria, se tiene que setear como tal y en la configuracion del proyecto ejecutable agregar imgui como Add-> Reference
+- Mirar el ejemplo para saber agregarlo
+
+----PASOS para instalar assimp -------
+- Usar el tutorial para comipilar y la sgt guia para compilar la libreria: https://static.packt-cdn.com/downloads/ModelLoading.pdf
+- Agregar config.h desde build/ en include/
+- Agregar archivo assimp-vc140-mt.dll en la raiz del proyecto
+
+
 
 -------- PASOS PARA crear un Proyecto ---------------------
 

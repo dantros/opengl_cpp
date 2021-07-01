@@ -25,6 +25,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "points3DCUDA", "points3DCUD
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "simpleLighting", "simpleLighting\simpleLighting.vcxproj", "{6BD22C32-D2B9-4290-9DAA-EAD998D911C5}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MaterialsImgui", "MaterialsImgui\MaterialsImgui.vcxproj", "{CC1059A0-14D8-4838-9CCC-323F00B0BCDB}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "simpleModelLoading", "simpleModelLoading\simpleModelLoading.vcxproj", "{56EF0BED-C30E-404A-BD38-C04838E33EB5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -115,6 +119,22 @@ Global
 		{6BD22C32-D2B9-4290-9DAA-EAD998D911C5}.Release|x64.Build.0 = Release|x64
 		{6BD22C32-D2B9-4290-9DAA-EAD998D911C5}.Release|x86.ActiveCfg = Release|Win32
 		{6BD22C32-D2B9-4290-9DAA-EAD998D911C5}.Release|x86.Build.0 = Release|Win32
+		{CC1059A0-14D8-4838-9CCC-323F00B0BCDB}.Debug|x64.ActiveCfg = Debug|x64
+		{CC1059A0-14D8-4838-9CCC-323F00B0BCDB}.Debug|x64.Build.0 = Debug|x64
+		{CC1059A0-14D8-4838-9CCC-323F00B0BCDB}.Debug|x86.ActiveCfg = Debug|Win32
+		{CC1059A0-14D8-4838-9CCC-323F00B0BCDB}.Debug|x86.Build.0 = Debug|Win32
+		{CC1059A0-14D8-4838-9CCC-323F00B0BCDB}.Release|x64.ActiveCfg = Release|x64
+		{CC1059A0-14D8-4838-9CCC-323F00B0BCDB}.Release|x64.Build.0 = Release|x64
+		{CC1059A0-14D8-4838-9CCC-323F00B0BCDB}.Release|x86.ActiveCfg = Release|Win32
+		{CC1059A0-14D8-4838-9CCC-323F00B0BCDB}.Release|x86.Build.0 = Release|Win32
+		{56EF0BED-C30E-404A-BD38-C04838E33EB5}.Debug|x64.ActiveCfg = Debug|x64
+		{56EF0BED-C30E-404A-BD38-C04838E33EB5}.Debug|x64.Build.0 = Debug|x64
+		{56EF0BED-C30E-404A-BD38-C04838E33EB5}.Debug|x86.ActiveCfg = Debug|Win32
+		{56EF0BED-C30E-404A-BD38-C04838E33EB5}.Debug|x86.Build.0 = Debug|Win32
+		{56EF0BED-C30E-404A-BD38-C04838E33EB5}.Release|x64.ActiveCfg = Release|x64
+		{56EF0BED-C30E-404A-BD38-C04838E33EB5}.Release|x64.Build.0 = Release|x64
+		{56EF0BED-C30E-404A-BD38-C04838E33EB5}.Release|x86.ActiveCfg = Release|Win32
+		{56EF0BED-C30E-404A-BD38-C04838E33EB5}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

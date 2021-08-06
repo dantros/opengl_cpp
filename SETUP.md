@@ -45,8 +45,8 @@ versiones diferentes de GLAD (OpenGL) en esta carpeta.
 -- Ahora hay que configurar el proyecto en VS
 - Seleccionar la plataforma x64 en el editor
 - Ir a configuraciones del proyecto y seleccionar en Platform: All Platforms
-- Ir a VC++ Directories -> Include Directories -> Edit -> new -> ... -> seleccionar la carpeta project/Libraries/include -> ok
-- Ir a VC++ Directories -> Library Directories -> Edit -> new -> ... -> seleccionar la carpeta project/Libraries/lib -> ok
+- Ir a VC++ Directories -> Include Directories -> Edit -> new -> ... -> agregar $(SolutionDir)Libraries/include -> ok
+- Ir a VC++ Directories -> Library Directories -> Edit -> new -> ... -> agregar $(SolutionDir)Libraries/lib -> ok
 - Ir a Linker -> Input -> Additional Dependencies -> Edit -> poner en el campo de texto:
 ```
 glfw3.lib
